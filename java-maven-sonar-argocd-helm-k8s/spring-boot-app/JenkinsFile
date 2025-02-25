@@ -1,11 +1,19 @@
 pipeline {
   agent {
     docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      image '273354629542.dkr.ecr.us-west-2.amazonaws.com/dockermvn:latest'
+      registryUrl 'https://273354629542.dkr.ecr.us-west-2.amazonaws.com'
+      registryCredentialsId 'aws-ecr-credentials'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
   stages {
+    stage('Check Docker & Maven Versions') {
+      steps {
+        sh 'mvn --version'
+        sh 'docker --version'
+      }
+    }
     stage('Checkout') {
       steps {
         sh 'echo passed'
