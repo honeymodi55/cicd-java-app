@@ -44,12 +44,18 @@ pipeline {
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${BUILD_NUMBER}"
       }
       steps {
+        withCredentials([[
+          $class: 'AmazonWebServicesCredentialsBinding', 
+          credentialsId: 'aws-ecr-credentials', 
+          //ccessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+          //secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]])
         script {
           sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
-          sh """
+          sh '''
             aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
             docker push ${DOCKER_IMAGE}
-          """
+          '''
         }
       }
     }
