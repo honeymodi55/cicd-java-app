@@ -72,7 +72,7 @@ pipeline {
         script {
             sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
             def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}', "aws-ecr-credentials") {
+            docker.withRegistry('273354629542.dkr.ecr.us-west-2.amazonaws.com/java_app_image', "aws-ecr-credentials") {
                 dockerImage.push()
             }
         }
