@@ -47,12 +47,14 @@ pipeline {
         script {
           sh '''
             cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .
-            aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-            docker push ${DOCKER_IMAGE}
+            sudo apt update && sudo apt install awscli -y
+            which aws
           '''
         }
       }
     }
+    //aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+            //docker push ${DOCKER_IMAGE}
     /*stage('Build and Push Docker Image') {
       environment {
         AWS_ACCOUNT_ID = "273354629542"
