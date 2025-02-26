@@ -36,7 +36,7 @@ pipeline {
         }
       }
     }
-    stage('Build & Push Docker Image to ECR') {
+    /*stage('Build & Push Docker Image to ECR') {
       environment {
         AWS_ACCOUNT_ID = "273354629542"
         AWS_REGION = "us-west-2"
@@ -52,25 +52,22 @@ pipeline {
           '''
         }
       }
-    }
-    /*stage('Build and Push Docker Image') {
+    }*/
+    stage('Build and Push Docker Image') {
       environment {
-        AWS_ACCOUNT_ID = "273354629542"
-        AWS_REGION = "us-west-2"
-        ECR_REPO = "java_app_image"
-        DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${BUILD_NUMBER}"
-        REGISTRY_CREDENTIALS = credentials('aws-ecr-credentials')
+        DOCKER_IMAGE = "honeymodi1997/ultimate-cicd:${BUILD_NUMBER}"
+        REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
         script {
             sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
             def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('273354629542.dkr.ecr.us-west-2.amazonaws.com/java_app_image', "aws-ecr-credentials") {
+            docker.withRegistry('https://index.docker.io', "docker-cred") {
                 dockerImage.push()
             }
         }
       }
-    }*/
+    }
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "cicd-java-app"
