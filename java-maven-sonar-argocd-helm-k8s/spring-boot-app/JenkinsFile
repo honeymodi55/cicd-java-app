@@ -12,6 +12,7 @@ pipeline {
       steps {
         sh 'mvn --version'
         sh 'docker --version'
+        sh 'aws --version'
       }
     }
     stage('Checkout') {
