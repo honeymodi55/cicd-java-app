@@ -69,7 +69,6 @@ pipeline {
             docker.withRegistry('https://index.docker.io/v2', "${REGISTRY_CREDENTIALS}") {
                 dockerImage.push()*/
             //}
-        }
       }
     }
     stage('Update Deployment File') {
