@@ -60,13 +60,15 @@ pipeline {
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
-        script {
-            sh -c 'echo "${REGISTRY_CREDENTIALS}"'
+        //script {
+            sh '''
+              echo "${REGISTRY_CREDENTIALS}"
+            '''
             /*sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
             /*def dockerImage = docker.image("${DOCKER_IMAGE}")
             docker.withRegistry('https://index.docker.io/v2', "${REGISTRY_CREDENTIALS}") {
                 dockerImage.push()*/
-            }
+            //}
         }
       }
     }
