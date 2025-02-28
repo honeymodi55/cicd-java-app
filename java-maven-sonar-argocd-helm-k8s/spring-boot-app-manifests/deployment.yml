@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: honeymodi55/ultimate-cicd:replaceImageTag
+        image: honeymodi55/ultimate-cicd:26
         ports:
         - containerPort: 8080
